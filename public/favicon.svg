@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F5F1E8" />
+      <stop offset="45%" stop-color="#C6A66B" />
+      <stop offset="100%" stop-color="#8C703D" />
+    </linearGradient>
+    <linearGradient id="silverGrad" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="60%" stop-color="#BFC4C8" />
+      <stop offset="100%" stop-color="#6E747A" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#080808" />
+  <rect x="1" y="1" width="62" height="62" rx="13" stroke="#252525" stroke-width="1.5" />
+  <!-- Stylized Y facet -->
+  <path d="M18 16L32 34L46 16H39L32 26L25 16H18Z" fill="url(#goldGrad)" />
+  <path d="M29 32H35V48H29V32Z" fill="url(#silverGrad)" />
+  <circle cx="32" cy="33" r="2.5" fill="#F5F1E8" />
+</svg>

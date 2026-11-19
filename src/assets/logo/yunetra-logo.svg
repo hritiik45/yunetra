@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 64" fill="none">
+  <defs>
+    <linearGradient id="logoGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F5F1E8" />
+      <stop offset="50%" stop-color="#C6A66B" />
+      <stop offset="100%" stop-color="#8C703D" />
+    </linearGradient>
+    <linearGradient id="logoSilver" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="60%" stop-color="#BFC4C8" />
+      <stop offset="100%" stop-color="#6E747A" />
+    </linearGradient>
+  </defs>
+
+  <!-- Emblem -->
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="#121214" stroke="#252525" stroke-width="2" />
+  <path d="M19 18L32 35L45 18H38.5L32 27L25.5 18H19Z" fill="url(#logoGold)" />
+  <path d="M29.5 33H34.5V47H29.5V33Z" fill="url(#logoSilver)" />
+  <circle cx="32" cy="34" r="2" fill="#F5F1E8" />
+
+  <!-- Typography -->
+  <text x="76" y="38" font-family="'Barlow Condensed', 'Anton', sans-serif" font-weight="700" font-size="28" fill="#F5F1E8" letter-spacing="3">YUNETRA</text>
+  <text x="77" y="50" font-family="'Inter', sans-serif" font-weight="500" font-size="9" fill="#C6A66B" letter-spacing="4">PRECISION TECHNOLOGY</text>
+</svg>
