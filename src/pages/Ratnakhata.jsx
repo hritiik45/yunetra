@@ -12,8 +12,12 @@ import {
   RefreshCw,
   Cpu,
 } from 'lucide-react';
+import usePageMotion from '../hooks/usePageMotion';
+import { MaskLine } from '../components/motion';
 
 export default function Ratnakhata() {
+  const pageRef = React.useRef(null);
+  usePageMotion(pageRef);
   const pillars = [
     {
       icon: BarChart3,
@@ -51,7 +55,7 @@ export default function Ratnakhata() {
   ];
 
   return (
-    <div className="w-full bg-[#080808] text-[#F5F1E8] overflow-hidden">
+    <div ref={pageRef} className="w-full bg-[#080808] text-[#F5F1E8] overflow-hidden">
       
       {/* ======================================================== */}
       {/* 1. HERO BANNER WITH ATMOSPHERIC BACKDROP & MASSIVE HEADLINE */}
@@ -88,8 +92,8 @@ export default function Ratnakhata() {
                 style={{ fontFamily: "'Anton', sans-serif" }}
                 className="uppercase tracking-tight leading-[0.92] select-none text-[3.25rem] sm:text-[4.25rem] md:text-[5rem] lg:text-[5.5rem] xl:text-[6.25rem]"
               >
-                <span className="block text-[#F5F1E8]">RATNAKHATA.</span>
-                <span className="block text-[#C6A66B] mt-1 sm:mt-1.5">PRECISION VALUATION.</span>
+                <MaskLine standalone d={0.15} className="text-[#F5F1E8]">RATNAKHATA.</MaskLine>
+                <MaskLine standalone d={0.27} className="text-[#C6A66B] mt-1 sm:mt-1.5">PRECISION VALUATION.</MaskLine>
               </h1>
 
               {/* Supporting Copy */}
@@ -101,7 +105,7 @@ export default function Ratnakhata() {
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Link
                   to="/contact"
-                  className="inline-flex items-center gap-2.5 px-8 py-4 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] text-[#080808] font-bold text-xs uppercase tracking-wider transition-all shadow-md group"
+                  className="btn-sheen inline-flex items-center gap-2.5 px-8 py-4 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] text-[#080808] font-bold text-xs uppercase tracking-wider transition-all shadow-md group"
                 >
                   <span>Request Ratnakhata Demo</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -226,7 +230,7 @@ export default function Ratnakhata() {
             <div className="pt-2">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] text-[#080808] font-bold text-xs uppercase tracking-wider transition-all shadow-md"
+                className="btn-sheen inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] text-[#080808] font-bold text-xs uppercase tracking-wider transition-all shadow-md"
               >
                 <span>Schedule Live Demonstration</span>
                 <ArrowRight className="w-4 h-4" />

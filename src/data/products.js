@@ -16,6 +16,7 @@ export const products = [
     description:
       'High-performance hardware-software infrastructure delivering ultra-reliable boundary telemetry, optical surveillance fusion, and real-time defense computing.',
     slug: '/products/boundaryx',
+    liveUrl: 'https://boundaryx.yunetra.com/user/home',
     badge: 'Hardware & Edge AI',
     status: 'Active Product',
   },

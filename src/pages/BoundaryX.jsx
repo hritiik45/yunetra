@@ -11,9 +11,14 @@ import {
   Eye,
   Crosshair,
   Server,
+  ExternalLink,
 } from 'lucide-react';
+import usePageMotion from '../hooks/usePageMotion';
+import { MaskLine } from '../components/motion';
 
 export default function BoundaryX() {
+  const pageRef = React.useRef(null);
+  usePageMotion(pageRef);
   const highlights = [
     {
       icon: Zap,
@@ -51,7 +56,7 @@ export default function BoundaryX() {
   ];
 
   return (
-    <div className="w-full bg-[#080808] text-[#F5F1E8] overflow-hidden">
+    <div ref={pageRef} className="w-full bg-[#080808] text-[#F5F1E8] overflow-hidden">
       
       {/* ======================================================== */}
       {/* 1. HERO BANNER WITH ATMOSPHERIC BACKDROP & MASSIVE HEADLINE */}
@@ -88,8 +93,8 @@ export default function BoundaryX() {
                 style={{ fontFamily: "'Anton', sans-serif" }}
                 className="uppercase tracking-tight leading-[0.92] select-none text-[3.25rem] sm:text-[4.25rem] md:text-[5rem] lg:text-[5.5rem] xl:text-[6.25rem]"
               >
-                <span className="block text-[#F5F1E8]">BOUNDARYX.</span>
-                <span className="block text-[#C6A66B] mt-1 sm:mt-1.5">AUTONOMOUS TELEMETRY.</span>
+                <MaskLine standalone d={0.15} className="text-[#F5F1E8]">BOUNDARYX.</MaskLine>
+                <MaskLine standalone d={0.27} className="text-[#C6A66B] mt-1 sm:mt-1.5">AUTONOMOUS TELEMETRY.</MaskLine>
               </h1>
 
               {/* Supporting Copy */}
@@ -99,16 +104,24 @@ export default function BoundaryX() {
 
               {/* Action Buttons */}
               <div className="mt-8 flex flex-wrap items-center gap-4">
+                <a
+                  href="https://boundaryx.yunetra.com/user/home"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-sheen inline-flex items-center gap-2.5 px-8 py-4 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] text-[#080808] font-bold text-xs uppercase tracking-wider transition-all shadow-md group"
+                >
+                  <span>Open BoundaryX Live Platform</span>
+                  <ExternalLink className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </a>
                 <Link
                   to="/contact"
-                  className="inline-flex items-center gap-2.5 px-8 py-4 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] text-[#080808] font-bold text-xs uppercase tracking-wider transition-all shadow-md group"
+                  className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-lg bg-[#141517] hover:bg-[#1A1C1F] border border-[#2B2D31] hover:border-[#C6A66B] text-[#F5F1E8] hover:text-[#C6A66B] text-xs uppercase font-semibold tracking-wider transition-all"
                 >
-                  <span>Inquire on BoundaryX Deployments</span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  <span>Inquire on Deployments</span>
                 </Link>
                 <Link
                   to="/products"
-                  className="inline-flex items-center justify-center px-7 py-4 rounded-lg bg-[#141517] hover:bg-[#1A1C1F] border border-[#2B2D31] hover:border-[#C6A66B] text-[#F5F1E8] hover:text-[#C6A66B] text-xs uppercase font-semibold tracking-wider transition-all"
+                  className="inline-flex items-center justify-center px-6 py-4 rounded-lg bg-[#141517] hover:bg-[#1A1C1F] border border-[#2B2D31] hover:border-[#C6A66B] text-[#F5F1E8] hover:text-[#C6A66B] text-xs uppercase font-semibold tracking-wider transition-all"
                 >
                   <span>All Products</span>
                 </Link>
@@ -223,13 +236,21 @@ export default function BoundaryX() {
             <p className="text-sm text-[#BFC4C8] max-w-lg mx-auto font-sans leading-relaxed">
               Connect with our hardware integration engineers to assess your facility boundaries and receive a custom optical sensor placement blueprint.
             </p>
-            <div className="pt-2">
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
+              <a
+                href="https://boundaryx.yunetra.com/user/home"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-sheen inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] text-[#080808] font-bold text-xs uppercase tracking-wider transition-all shadow-md group"
+              >
+                <span>Launch BoundaryX Portal</span>
+                <ExternalLink className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] text-[#080808] font-bold text-xs uppercase tracking-wider transition-all shadow-md"
+                className="inline-flex items-center justify-center px-8 py-4 rounded-lg bg-[#141517] hover:bg-[#1A1C1F] border border-[#2B2D31] hover:border-[#C6A66B] text-[#F5F1E8] hover:text-[#C6A66B] text-xs uppercase font-semibold tracking-wider transition-all"
               >
-                <span>Request Facility Telemetry Consultation</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>Request Facility Consultation</span>
               </Link>
             </div>
           </div>

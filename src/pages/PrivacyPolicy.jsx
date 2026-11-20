@@ -1,9 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import usePageMotion from '../hooks/usePageMotion';
+import { MaskLine } from '../components/motion';
 
 export default function PrivacyPolicy() {
+  const pageRef = React.useRef(null);
+  usePageMotion(pageRef);
   return (
-    <div className="w-full bg-[#080808] text-[#F5F1E8] overflow-hidden">
+    <div ref={pageRef} className="w-full bg-[#080808] text-[#F5F1E8] overflow-hidden">
       
       {/* ======================================================== */}
       {/* 1. HERO BANNER WITH ATMOSPHERIC BACKDROP & MASSIVE HEADLINE */}
@@ -37,8 +41,8 @@ export default function PrivacyPolicy() {
               style={{ fontFamily: "'Anton', sans-serif" }}
               className="uppercase tracking-tight leading-[0.92] select-none text-[3.25rem] sm:text-[4.25rem] md:text-[5rem] lg:text-[5.5rem] xl:text-[6.25rem]"
             >
-              <span className="block text-[#F5F1E8]">PRIVACY</span>
-              <span className="block text-[#C6A66B] mt-1 sm:mt-1.5">POLICY.</span>
+              <MaskLine standalone d={0.15} className="text-[#F5F1E8]">PRIVACY</MaskLine>
+              <MaskLine standalone d={0.27} className="text-[#C6A66B] mt-1 sm:mt-1.5">POLICY.</MaskLine>
             </h1>
 
             {/* Supporting Copy */}
@@ -142,9 +146,9 @@ export default function PrivacyPolicy() {
               </h2>
               <div className="p-6 rounded-xl bg-[#141517] border border-[#2B2D31]">
                 <div className="text-base font-bold text-[#F5F1E8]">Yunetra Data Protection Office</div>
-                <div className="text-xs text-[#C6A66B] mt-0.5">Email: privacy@yunetra.com &bull; legal@yunetra.com</div>
+                <div className="text-xs text-[#C6A66B] mt-0.5">Email: hritik45raghuwanshi@gmail.com &bull; Phone: 62600491554</div>
                 <div className="text-xs text-[#858B92] mt-1">
-                  Registered Address: BKC Financial Center, Tower 3, Bandra-Kurla Complex, Mumbai, MH — 400051
+                  Registered Address: Khatiwala Tank, Near Gurudwara, Indore
                 </div>
               </div>
             </section>

@@ -1,10 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, Scale, Cpu, ArrowRight } from 'lucide-react';
+import usePageMotion from '../hooks/usePageMotion';
+import { MaskLine } from '../components/motion';
 
 export default function TermsConditions() {
+  const pageRef = React.useRef(null);
+  usePageMotion(pageRef);
   return (
-    <div className="w-full bg-[#080808] text-[#F5F1E8] overflow-hidden">
+    <div ref={pageRef} className="w-full bg-[#080808] text-[#F5F1E8] overflow-hidden">
       
       {/* ======================================================== */}
       {/* 1. HERO BANNER WITH ATMOSPHERIC BACKDROP & MASSIVE HEADLINE */}
@@ -38,8 +42,8 @@ export default function TermsConditions() {
               style={{ fontFamily: "'Anton', sans-serif" }}
               className="uppercase tracking-tight leading-[0.92] select-none text-[3.25rem] sm:text-[4.25rem] md:text-[5rem] lg:text-[5.5rem] xl:text-[6.25rem]"
             >
-              <span className="block text-[#F5F1E8]">TERMS OF</span>
-              <span className="block text-[#C6A66B] mt-1 sm:mt-1.5">SERVICE.</span>
+              <MaskLine standalone d={0.15} className="text-[#F5F1E8]">TERMS OF</MaskLine>
+              <MaskLine standalone d={0.27} className="text-[#C6A66B] mt-1 sm:mt-1.5">SERVICE.</MaskLine>
             </h1>
 
             {/* Supporting Copy */}
@@ -217,9 +221,9 @@ export default function TermsConditions() {
               </h2>
               <div className="p-6 rounded-xl bg-[#0A0A0C] border border-[#232326] space-y-1">
                 <div className="text-sm font-bold text-[#F5F1E8] font-sans">Yunetra Legal Affairs Division</div>
-                <div className="text-xs text-[#C6A66B] font-sans">Email: legal@yunetra.com &bull; compliance@yunetra.com</div>
+                <div className="text-xs text-[#C6A66B] font-sans">Email: hritik45raghuwanshi@gmail.com &bull; Phone: 62600491554</div>
                 <div className="text-xs text-[#858B92] font-sans mt-1">
-                  Registered Headquarters: BKC Financial Center, Tower 3, Bandra-Kurla Complex, Mumbai, MH — 400051
+                  Registered Headquarters: Khatiwala Tank, Near Gurudwara, Indore
                 </div>
               </div>
             </section>

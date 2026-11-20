@@ -11,6 +11,8 @@ import {
   CheckCircle2,
   Sparkles,
 } from 'lucide-react';
+import usePageMotion from '../hooks/usePageMotion';
+import { MaskLine } from '../components/motion';
 
 const portfolioItems = [
   {
@@ -48,6 +50,7 @@ const portfolioItems = [
     techStack: ['Embedded C++', 'FPGA Fusion', 'Python', 'WebRTC', 'Hardware HSM'],
     impact: 'Deployed across perimeter boundaries for mission-critical industrial yards.',
     link: '/products/boundaryx',
+    liveUrl: 'https://boundaryx.yunetra.com/user/home',
   },
   {
     id: 'business-portal',
@@ -106,6 +109,8 @@ const portfolioItems = [
 ];
 
 export default function Portfolio() {
+  const pageRef = React.useRef(null);
+  usePageMotion(pageRef);
   const [activeFilter, setActiveFilter] = useState('all');
 
   const filteredItems =
@@ -122,7 +127,7 @@ export default function Portfolio() {
   ];
 
   return (
-    <div className="w-full bg-[#080808] text-[#F5F1E8] overflow-hidden">
+    <div ref={pageRef} className="w-full bg-[#080808] text-[#F5F1E8] overflow-hidden">
       
       {/* ======================================================== */}
       {/* 1. HERO BANNER WITH ATMOSPHERIC BACKDROP & MASSIVE HEADLINE */}
@@ -156,8 +161,8 @@ export default function Portfolio() {
               style={{ fontFamily: "'Anton', sans-serif" }}
               className="uppercase tracking-tight leading-[0.92] select-none text-[3.25rem] sm:text-[4.25rem] md:text-[5rem] lg:text-[5.5rem] xl:text-[6.25rem]"
             >
-              <span className="block text-[#F5F1E8]">REAL PROJECTS.</span>
-              <span className="block text-[#C6A66B] mt-1 sm:mt-1.5">REAL OUTCOMES.</span>
+              <MaskLine standalone d={0.15} className="text-[#F5F1E8]">REAL PROJECTS.</MaskLine>
+              <MaskLine standalone d={0.27} className="text-[#C6A66B] mt-1 sm:mt-1.5">REAL OUTCOMES.</MaskLine>
             </h1>
 
             {/* Supporting Copy */}
@@ -271,13 +276,26 @@ export default function Portfolio() {
                       <p className="text-xs text-[#858B92] font-sans italic">
                         &bull; {project.impact}
                       </p>
-                      <Link
-                        to={project.link}
-                        className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] text-[#080808] text-xs font-bold uppercase tracking-wider transition-all shadow-md flex-shrink-0"
-                      >
-                        <span>Explore Details</span>
-                        <ArrowRight className="w-4 h-4" />
-                      </Link>
+                      <div className="flex flex-wrap items-center gap-3">
+                        {project.liveUrl && (
+                          <a
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 px-5 py-3 rounded-lg border border-[#2B2D31] hover:border-[#C6A66B] bg-[#141517] hover:bg-[#1A1C1F] text-[#F5F1E8] hover:text-[#C6A66B] text-xs font-bold uppercase tracking-wider transition-all shadow-sm group"
+                          >
+                            <span>Live Project</span>
+                            <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                          </a>
+                        )}
+                        <Link
+                          to={project.link}
+                          className="btn-sheen inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] text-[#080808] text-xs font-bold uppercase tracking-wider transition-all shadow-md flex-shrink-0"
+                        >
+                          <span>Explore Details</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </Link>
+                      </div>
                     </div>
 
                   </div>
@@ -304,7 +322,7 @@ export default function Portfolio() {
             <div className="pt-2">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] text-[#080808] font-bold text-xs uppercase tracking-wider transition-all shadow-md"
+                className="btn-sheen inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] text-[#080808] font-bold text-xs uppercase tracking-wider transition-all shadow-md"
               >
                 <span>Initiate Project Consultation</span>
                 <ArrowRight className="w-4 h-4" />

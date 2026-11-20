@@ -13,8 +13,12 @@ import {
   Shield,
   Zap,
 } from 'lucide-react';
+import usePageMotion from '../hooks/usePageMotion';
+import { MaskLine } from '../components/motion';
 
 export default function Services() {
+  const pageRef = React.useRef(null);
+  usePageMotion(pageRef);
   const iconMap = {
     'website-development': Monitor,
     'mobile-app-development': Smartphone,
@@ -24,7 +28,7 @@ export default function Services() {
   };
 
   return (
-    <div className="w-full bg-[#080808] text-[#F5F1E8] overflow-hidden">
+    <div ref={pageRef} className="w-full bg-[#080808] text-[#F5F1E8] overflow-hidden">
       
       {/* ======================================================== */}
       {/* 1. HERO BANNER WITH ATMOSPHERIC BACKDROP & MASSIVE HEADLINE */}
@@ -58,8 +62,8 @@ export default function Services() {
               style={{ fontFamily: "'Anton', sans-serif" }}
               className="uppercase tracking-tight leading-[0.92] select-none text-[3.25rem] sm:text-[4.25rem] md:text-[5rem] lg:text-[5.5rem] xl:text-[6.25rem]"
             >
-              <span className="block text-[#F5F1E8]">HIGH-PERFORMANCE.</span>
-              <span className="block text-[#C6A66B] mt-1 sm:mt-1.5">DIGITAL SOLUTIONS.</span>
+              <MaskLine standalone d={0.15} className="text-[#F5F1E8]">HIGH-PERFORMANCE.</MaskLine>
+              <MaskLine standalone d={0.27} className="text-[#C6A66B] mt-1 sm:mt-1.5">DIGITAL SOLUTIONS.</MaskLine>
             </h1>
 
             {/* Supporting Copy */}
@@ -209,7 +213,7 @@ export default function Services() {
                         </div>
                         <Link
                           to="/contact"
-                          className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] active:bg-[#B09054] text-[#080808] font-bold text-xs uppercase tracking-wider transition-all shadow-md group"
+                          className="btn-sheen w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] active:bg-[#B09054] text-[#080808] font-bold text-xs uppercase tracking-wider transition-all shadow-md group"
                         >
                           <span>Consult on {item.title}</span>
                           <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -240,7 +244,7 @@ export default function Services() {
             <div className="pt-2">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2.5 px-8 py-4 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] text-[#080808] font-bold text-xs uppercase tracking-wider transition-all shadow-md"
+                className="btn-sheen inline-flex items-center gap-2.5 px-8 py-4 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] text-[#080808] font-bold text-xs uppercase tracking-wider transition-all shadow-md"
               >
                 <span>Schedule Engineering Discovery Call</span>
                 <ArrowRight className="w-4 h-4" />

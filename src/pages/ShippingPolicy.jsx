@@ -1,10 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Truck, Box, Cpu, ArrowRight } from 'lucide-react';
+import usePageMotion from '../hooks/usePageMotion';
+import { MaskLine } from '../components/motion';
 
 export default function ShippingPolicy() {
+  const pageRef = React.useRef(null);
+  usePageMotion(pageRef);
   return (
-    <div className="w-full bg-[#080808] text-[#F5F1E8] overflow-hidden">
+    <div ref={pageRef} className="w-full bg-[#080808] text-[#F5F1E8] overflow-hidden">
       
       {/* ======================================================== */}
       {/* 1. HERO BANNER WITH ATMOSPHERIC BACKDROP & MASSIVE HEADLINE */}
@@ -38,8 +42,8 @@ export default function ShippingPolicy() {
               style={{ fontFamily: "'Anton', sans-serif" }}
               className="uppercase tracking-tight leading-[0.92] select-none text-[3.25rem] sm:text-[4.25rem] md:text-[5rem] lg:text-[5.5rem] xl:text-[6.25rem]"
             >
-              <span className="block text-[#F5F1E8]">SHIPPING &amp;</span>
-              <span className="block text-[#C6A66B] mt-1 sm:mt-1.5">DELIVERY POLICY.</span>
+              <MaskLine standalone d={0.15} className="text-[#F5F1E8]">SHIPPING &amp;</MaskLine>
+              <MaskLine standalone d={0.27} className="text-[#C6A66B] mt-1 sm:mt-1.5">DELIVERY POLICY.</MaskLine>
             </h1>
 
             {/* Supporting Copy */}
@@ -173,12 +177,12 @@ export default function ShippingPolicy() {
               <div className="mt-4 p-6 rounded-xl bg-[#141517] border border-[#2B2D31] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                   <div className="text-base font-bold text-[#F5F1E8]">Yunetra Logistics Operations &amp; Dispatch</div>
-                  <div className="text-xs text-[#C6A66B] mt-0.5">Email: logistics@yunetra.com &bull; support@yunetra.com</div>
+                  <div className="text-xs text-[#C6A66B] mt-0.5">Email: hritik45raghuwanshi@gmail.com &bull; Phone: 62600491554</div>
                   <div className="text-xs text-[#858B92] mt-1">Please report transit discrepancies within 48 hours with packaging photos.</div>
                 </div>
                 <Link
                   to="/contact"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] text-[#080808] font-bold text-xs uppercase tracking-wider transition-all"
+                  className="btn-sheen inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] text-[#080808] font-bold text-xs uppercase tracking-wider transition-all"
                 >
                   <span>Logistics Inquiry</span>
                   <ArrowRight className="w-3.5 h-3.5" />

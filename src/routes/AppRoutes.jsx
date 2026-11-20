@@ -17,17 +17,17 @@ import ShippingPolicy from '../pages/ShippingPolicy';
 import Portfolio from '../pages/Portfolio';
 import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
+import { scrollToTop, refreshScrollTriggers } from '../lib/animations';
 
 // Scroll to top on route change
 function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'instant',
-    });
+    // Lenis-aware jump to top, then recalculate ScrollTrigger positions for the new page.
+    scrollToTop();
+    const id = requestAnimationFrame(() => refreshScrollTriggers());
+    return () => cancelAnimationFrame(id);
   }, [pathname]);
 
   return null;

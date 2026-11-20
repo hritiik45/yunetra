@@ -35,6 +35,117 @@
   animation: pulseGlow 3s ease-in-out infinite;
 }
 
+/* ---------------------------------------------------------------------- */
+/* Lenis                                                                   */
+/* ---------------------------------------------------------------------- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Premium interaction primitives                                          */
+/* ---------------------------------------------------------------------- */
+
+/* Diagonal light sweep across a button on hover (gold/ivory only). */
+.btn-sheen {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-sheen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(245, 241, 232, 0.28) 50%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+.btn-sheen:hover::after,
+.btn-sheen:focus-visible::after {
+  transform: translateX(120%);
+}
+.btn-sheen:focus-visible {
+  outline: 2px solid #c6a66b;
+  outline-offset: 3px;
+}
+
+/* Cursor-following gold highlight (position written by spotlightMove). */
+.spotlight {
+  --mx: 50%;
+  --my: 50%;
+}
+.spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    280px circle at var(--mx) var(--my),
+    rgba(198, 166, 107, 0.13),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+.spotlight:hover::before {
+  opacity: 1;
+}
+
+/* Underline that slides in from the left on hover (footer / utility links). */
+.link-slide {
+  position: relative;
+  display: inline-block;
+  transition: color 0.25s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.link-slide::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: #c6a66b;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.link-slide:hover,
+.link-slide:focus-visible {
+  transform: translateX(3px);
+}
+.link-slide:hover::after,
+.link-slide:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
 /* Accessible reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,

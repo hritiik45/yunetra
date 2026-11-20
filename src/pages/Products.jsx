@@ -1,8 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, CheckCircle2, Shield, Sparkles, Cpu } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Shield, Sparkles, Cpu, ExternalLink } from 'lucide-react';
+import usePageMotion from '../hooks/usePageMotion';
+import { MaskLine } from '../components/motion';
 
 export default function Products() {
+  const pageRef = React.useRef(null);
+  usePageMotion(pageRef);
   const products = [
     {
       id: 'ratnakhata',
@@ -35,13 +39,14 @@ export default function Products() {
         'Zero-Trust Encrypted Hardware Security Module (HSM)',
       ],
       slug: '/products/boundaryx',
+      liveUrl: 'https://boundaryx.yunetra.com/user/home',
       image: '/images/hq/boundaryx_mockup.webp',
       badge: 'Active System',
     },
   ];
 
   return (
-    <div className="w-full bg-[#080808] text-[#F5F1E8] overflow-hidden">
+    <div ref={pageRef} className="w-full bg-[#080808] text-[#F5F1E8] overflow-hidden">
       
       {/* ======================================================== */}
       {/* 1. HERO BANNER WITH ATMOSPHERIC BACKDROP & MASSIVE HEADLINE */}
@@ -75,8 +80,8 @@ export default function Products() {
               style={{ fontFamily: "'Anton', sans-serif" }}
               className="uppercase tracking-tight leading-[0.92] select-none text-[3.25rem] sm:text-[4.25rem] md:text-[5rem] lg:text-[5.5rem] xl:text-[6.25rem]"
             >
-              <span className="block text-[#F5F1E8]">ENGINEERED PRODUCTS.</span>
-              <span className="block text-[#C6A66B] mt-1 sm:mt-1.5">UNCOMPROMISING RIGOR.</span>
+              <MaskLine standalone d={0.15} className="text-[#F5F1E8]">ENGINEERED PRODUCTS.</MaskLine>
+              <MaskLine standalone d={0.27} className="text-[#C6A66B] mt-1 sm:mt-1.5">UNCOMPROMISING RIGOR.</MaskLine>
             </h1>
 
             {/* Supporting Copy */}
@@ -142,9 +147,24 @@ export default function Products() {
                     </div>
 
                     <div className="pt-4 flex flex-wrap items-center gap-4">
+                      {prod.liveUrl ? (
+                        <a
+                          href={prod.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn-sheen inline-flex items-center gap-2 px-7 py-3.5 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] text-[#080808] font-bold text-xs uppercase tracking-wider transition-all shadow-md group"
+                        >
+                          <span>Launch {prod.title}</span>
+                          <ExternalLink className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                        </a>
+                      ) : null}
                       <Link
                         to={prod.slug}
-                        className="inline-flex items-center gap-2 px-7 py-3.5 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] text-[#080808] font-bold text-xs uppercase tracking-wider transition-all shadow-md group"
+                        className={
+                          prod.liveUrl
+                            ? 'inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-[#141517] hover:bg-[#1A1C1F] border border-[#2B2D31] hover:border-[#C6A66B] text-[#F5F1E8] hover:text-[#C6A66B] text-xs uppercase font-semibold tracking-wider transition-all group'
+                            : 'btn-sheen inline-flex items-center gap-2 px-7 py-3.5 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] text-[#080808] font-bold text-xs uppercase tracking-wider transition-all shadow-md group'
+                        }
                       >
                         <span>Explore {prod.title} Architecture</span>
                         <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -191,7 +211,7 @@ export default function Products() {
             <div className="pt-2">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] text-[#080808] font-bold text-xs uppercase tracking-wider transition-all shadow-md"
+                className="btn-sheen inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] text-[#080808] font-bold text-xs uppercase tracking-wider transition-all shadow-md"
               >
                 <span>Schedule Architectural Briefing</span>
                 <ArrowRight className="w-4 h-4" />

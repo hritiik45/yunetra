@@ -1,7 +1,7 @@
-import React, { useRef } from 'react';
-import { motion } from 'framer-motion';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, Quote } from 'lucide-react';
 import { prefersReducedMotion } from '../../lib/animations';
+import { Scene, Item, MaskLine, spotlightMove } from '../../components/motion';
 
 const testimonials = [
   {
@@ -31,18 +31,43 @@ const testimonials = [
 ];
 
 export default function TestimonialsSection() {
-  const shouldReduceMotion = prefersReducedMotion();
   const scrollContainerRef = useRef(null);
+  const [can, setCan] = useState({ prev: false, next: false });
+
+  // The track is a real horizontal scroll-snap carousel. This measures whether
+  // there is anything to scroll to, so the arrows are only live when they can act
+  // (e.g. all three cards fit side by side on wide screens -> nothing to scroll).
+  const measure = useCallback(() => {
+    const el = scrollContainerRef.current;
+    if (!el) return;
+    const prev = el.scrollLeft > 4;
+    const next = el.scrollLeft + el.clientWidth < el.scrollWidth - 4;
+    setCan((c) => (c.prev === prev && c.next === next ? c : { prev, next }));
+  }, []);
+
+  useEffect(() => {
+    const el = scrollContainerRef.current;
+    if (!el) return undefined;
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [measure]);
 
   const scroll = (direction) => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = 340;
-      scrollContainerRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth',
-      });
-    }
+    const el = scrollContainerRef.current;
+    if (!el) return;
+    const card = el.querySelector('[data-card]');
+    const gap = parseFloat(getComputedStyle(el).columnGap) || 16;
+    const amount = (card ? card.offsetWidth : 340) + gap;
+    el.scrollBy({
+      left: direction === 'left' ? -amount : amount,
+      behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+    });
   };
+
+  const navBtn =
+    'w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-[#3A3528] bg-[#0A0A0B] flex items-center justify-center transition-[border-color,background-color,opacity,transform] duration-300 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6A66B] enabled:hover:border-[#C6A66B] enabled:hover:bg-[#C6A66B] enabled:active:scale-95 disabled:opacity-35 disabled:cursor-default';
 
   return (
     <section
@@ -51,75 +76,98 @@ export default function TestimonialsSection() {
       className="relative w-full bg-[#080808] py-16 sm:py-20 lg:py-24 text-[#F5F1E8] overflow-hidden"
     >
       <div className="mx-auto w-full max-w-[1400px] px-6 sm:px-8 lg:px-12">
-        
         {/* Top Header Row with Navigation Controls on Right */}
-        <div className="flex items-start justify-between mb-8 sm:mb-10">
+        <Scene className="flex items-start justify-between mb-8 sm:mb-10">
           <div>
             {/* Eyebrow */}
-            <p className="text-[11px] sm:text-xs font-semibold tracking-[0.25em] uppercase text-[#C6A66B] font-sans select-none mb-3 sm:mb-4">
+            <Item
+              as="p"
+              className="text-[11px] sm:text-xs font-semibold tracking-[0.25em] uppercase text-[#C6A66B] font-sans select-none mb-3 sm:mb-4"
+            >
               WHAT PEOPLE SAY
-            </p>
+            </Item>
           </div>
 
           {/* Top-Right Circular Navigation Controls */}
-          <div className="flex items-center gap-3 select-none">
+          <Item d={0.15} className="flex items-center gap-3 select-none">
             <button
               type="button"
               onClick={() => scroll('left')}
-              className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-[#3A3528] hover:border-[#C6A66B] bg-[#0A0A0B] hover:bg-[#141416] flex items-center justify-center transition-colors duration-200 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6A66B]"
+              disabled={!can.prev}
+              className={navBtn}
               aria-label="Previous testimonial"
+              aria-controls="testimonial-track"
             >
-              <ArrowLeft className="w-4 h-4 text-[#C6A66B] transition-transform duration-200 group-hover:-translate-x-0.5" />
+              <ArrowLeft className="w-4 h-4 text-[#C6A66B] group-enabled:group-hover:text-[#080808] transition-[transform,color] duration-300 group-enabled:group-hover:-translate-x-0.5" />
             </button>
             <button
               type="button"
               onClick={() => scroll('right')}
-              className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-[#3A3528] hover:border-[#C6A66B] bg-[#0A0A0B] hover:bg-[#141416] flex items-center justify-center transition-colors duration-200 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6A66B]"
+              disabled={!can.next}
+              className={navBtn}
               aria-label="Next testimonial"
+              aria-controls="testimonial-track"
             >
-              <ArrowRight className="w-4 h-4 text-[#C6A66B] transition-transform duration-200 group-hover:translate-x-0.5" />
+              <ArrowRight className="w-4 h-4 text-[#C6A66B] group-enabled:group-hover:text-[#080808] transition-[transform,color] duration-300 group-enabled:group-hover:translate-x-0.5" />
             </button>
-          </div>
-        </div>
+          </Item>
+        </Scene>
 
         {/* Content Grid: Headline on Left + 3 Testimonial Cards on Right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-10 items-stretch">
-          
           {/* Left Column: Oversized Condensed Headline */}
-          <div className="lg:col-span-3 flex flex-col justify-start">
+          <Scene className="lg:col-span-3 flex flex-col justify-start">
             <h2
               id="testimonials-heading"
               style={{ fontFamily: "'Anton', sans-serif" }}
               className="uppercase tracking-tight leading-[0.94] select-none text-[3.25rem] sm:text-[3.75rem] md:text-[4.25rem] lg:text-[4.35rem] xl:text-[4.85rem]"
             >
-              <span className="block text-[#F5F1E8]">WHAT</span>
-              <span className="block text-[#F5F1E8] mt-1 sm:mt-1.5">PEOPLE</span>
-              <span className="block text-[#C6A66B] mt-1 sm:mt-1.5">SAY.</span>
+              <MaskLine d={0.08} className="text-[#F5F1E8]">WHAT</MaskLine>
+              <MaskLine d={0.18} className="text-[#F5F1E8] mt-1 sm:mt-1.5">PEOPLE</MaskLine>
+              <MaskLine d={0.28} className="text-[#C6A66B] mt-1 sm:mt-1.5">SAY.</MaskLine>
             </h2>
-          </div>
+          </Scene>
 
-          {/* Right Column: Three Testimonial Cards */}
-          <div className="lg:col-span-9">
+          {/* Right Column: Three Testimonial Cards (horizontal scroll-snap track) */}
+          <Scene amount={0.15} className="lg:col-span-9 min-w-0">
             <div
+              id="testimonial-track"
               ref={scrollContainerRef}
-              className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-4 xl:gap-5 overflow-x-auto pb-2 scrollbar-none snap-x"
+              onScroll={measure}
+              tabIndex={0}
+              role="region"
+              aria-label="Client testimonials"
+              className="flex gap-4 xl:gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-none overscroll-x-contain px-2 -mx-2 pt-4 -mt-4 pb-8 -mb-6 focus-visible:outline-none"
             >
-              {testimonials.map((item, idx) => {
-                const cardContent = (
-                  <div className="group relative flex flex-col justify-between h-full p-6 sm:p-7 rounded-xl bg-[#0E0F10] border border-[#222425] hover:border-[#C6A66B]/50 transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.45)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.65)] snap-start">
-                    <div>
+              {testimonials.map((item, idx) => (
+                <Item
+                  key={item.id}
+                  data-card
+                  d={0.1 + idx * 0.14}
+                  className="snap-start shrink-0 basis-[86%] sm:basis-[calc((100%-1rem)/2)] lg:basis-[calc((100%-2rem)/3)] xl:basis-[calc((100%-2.5rem)/3)]"
+                >
+                  <div
+                    onPointerMove={spotlightMove}
+                    className="spotlight group relative flex flex-col justify-between h-full p-6 sm:p-7 rounded-xl overflow-hidden bg-gradient-to-b from-[#121314] to-[#0C0D0E] border border-[#222425] hover:border-[#C6A66B]/50 transition-[border-color,transform,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[0_4px_20px_rgba(0,0,0,0.45)] hover:shadow-[0_18px_44px_rgba(0,0,0,0.7)] hover:-translate-y-1.5"
+                  >
+                    {/* Gold hairline drawing across the top edge on hover */}
+                    <span
+                      aria-hidden="true"
+                      className="absolute top-0 left-0 right-0 h-px bg-[#C6A66B] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                    />
+                    <div className="relative">
                       {/* Gold Quotation Mark */}
-                      <div className="mb-4 text-[#C6A66B] select-none flex items-center">
+                      <div className="mb-4 text-[#C6A66B] select-none flex items-center origin-left transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110 group-hover:-rotate-6">
                         <Quote className="w-7 h-7 fill-[#C6A66B] text-[#C6A66B]" />
                       </div>
 
                       {/* Testimonial Paragraph */}
-                      <p className="text-xs sm:text-[13.5px] text-[#BFC4C8] font-sans leading-relaxed font-normal">
+                      <p className="text-xs sm:text-[13.5px] text-[#BFC4C8] group-hover:text-[#D5D9DC] transition-colors duration-500 font-sans leading-relaxed font-normal">
                         {item.quote}
                       </p>
                     </div>
 
-                    <div>
+                    <div className="relative">
                       {/* Thin Horizontal Divider */}
                       <div className="w-full h-[1px] bg-[#222425] my-5" />
 
@@ -128,7 +176,7 @@ export default function TestimonialsSection() {
                         <img
                           src={item.avatar}
                           alt={item.name}
-                          className="w-11 h-11 rounded-full object-cover border border-[#2A2A2D]"
+                          className="w-11 h-11 rounded-full object-cover border border-[#2A2A2D] group-hover:border-[#C6A66B]/60 transition-colors duration-500"
                           loading="lazy"
                         />
                         <div>
@@ -142,34 +190,11 @@ export default function TestimonialsSection() {
                       </div>
                     </div>
                   </div>
-                );
-
-                if (shouldReduceMotion) {
-                  return <div key={item.id} className="h-full">{cardContent}</div>;
-                }
-
-                return (
-                  <motion.div
-                    key={item.id}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-20px' }}
-                    transition={{
-                      duration: 0.45,
-                      delay: idx * 0.08,
-                      ease: [0.2, 0, 0, 1],
-                    }}
-                    className="h-full"
-                  >
-                    {cardContent}
-                  </motion.div>
-                );
-              })}
+                </Item>
+              ))}
             </div>
-          </div>
-
+          </Scene>
         </div>
-
       </div>
     </section>
   );

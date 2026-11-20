@@ -9,11 +9,23 @@ import {
   Sparkles,
   CheckCircle2,
   ChevronDown,
-  ArrowRight
+  ArrowRight,
+  Loader2,
+  AlertCircle
 } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { CONTACT } from '../data/contact';
+import { submitForm } from '../lib/submitForm';
+import { EASE_OUT } from '../lib/animations';
+import usePageMotion from '../hooks/usePageMotion';
+import { MaskLine } from '../components/motion';
 
 export default function Contact() {
+  const pageRef = React.useRef(null);
+  usePageMotion(pageRef);
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
   const [activeFaq, setActiveFaq] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
@@ -25,9 +37,35 @@ export default function Contact() {
     message: '',
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    const form = e.currentTarget;
+    // Honeypot: real visitors never fill this hidden field.
+    if (form.elements._honey && form.elements._honey.value) return;
+    setError('');
+    setSending(true);
+    try {
+      await submitForm(
+        {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          organization: formData.organization,
+          interest: formData.interest,
+          budget: formData.budget,
+          message: formData.message,
+        },
+        { subject: `New Yunetra enquiry from ${formData.name}` }
+      );
+      setSubmitted(true);
+      setFormData((prev) => ({ ...prev, message: '' }));
+    } catch {
+      setError(
+        `We could not send your message. Please try again, or email us directly at ${CONTACT.email}.`
+      );
+    } finally {
+      setSending(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -39,29 +77,29 @@ export default function Contact() {
     {
       icon: Mail,
       title: 'Corporate Email',
-      detail: 'contact@yunetra.com',
+      detail: CONTACT.email,
       subtext: 'Executive & commercial partnerships',
-      action: 'mailto:contact@yunetra.com',
+      action: `mailto:${CONTACT.email}`,
     },
     {
       icon: Phone,
       title: 'Direct Telephony',
-      detail: '+91 (0) 22 4589 7700',
+      detail: CONTACT.phoneDisplay,
       subtext: 'Mon–Fri, 9:00 AM – 7:00 PM IST',
-      action: 'tel:+912245897700',
+      action: CONTACT.phoneTel,
     },
     {
       icon: MessageSquare,
       title: 'Technical Support',
-      detail: 'support@yunetra.com',
+      detail: CONTACT.email,
       subtext: '24/7 SLA active deployment help',
-      action: 'mailto:support@yunetra.com',
+      action: `mailto:${CONTACT.email}`,
     },
     {
       icon: MapPin,
       title: 'Headquarters',
-      detail: 'BKC Financial Center, T3',
-      subtext: 'Bandra-Kurla, Mumbai — 400051',
+      detail: CONTACT.addressLine1,
+      subtext: CONTACT.addressLine2,
       action: null,
     },
   ];
@@ -86,7 +124,7 @@ export default function Contact() {
   ];
 
   return (
-    <div className="w-full bg-[#080808] text-[#F5F1E8] overflow-hidden">
+    <div ref={pageRef} className="w-full bg-[#080808] text-[#F5F1E8] overflow-hidden">
       
       {/* ======================================================== */}
       {/* 1. HERO BANNER WITH ATMOSPHERIC BACKDROP & MASSIVE HEADLINE */}
@@ -123,8 +161,8 @@ export default function Contact() {
                 style={{ fontFamily: "'Anton', sans-serif" }}
                 className="uppercase tracking-tight leading-[0.92] select-none text-[3.25rem] sm:text-[4.25rem] md:text-[5rem] lg:text-[5.5rem] xl:text-[6.25rem]"
               >
-                <span className="block text-[#F5F1E8]">LET’S BUILD</span>
-                <span className="block text-[#C6A66B] mt-1 sm:mt-1.5">SOMETHING GREAT.</span>
+                <MaskLine standalone d={0.15} className="text-[#F5F1E8]">LET’S BUILD</MaskLine>
+                <MaskLine standalone d={0.27} className="text-[#C6A66B] mt-1 sm:mt-1.5">SOMETHING GREAT.</MaskLine>
               </h1>
 
               {/* Supporting Copy */}
@@ -221,7 +259,9 @@ export default function Contact() {
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-5">
+                <form onSubmit={handleSubmit} className="space-y-5" aria-busy={sending}>
+                  {/* Spam honeypot (hidden from people) */}
+                  <input type="text" name="_honey" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
                       <label
@@ -368,12 +408,23 @@ export default function Contact() {
                   </div>
 
                   <div className="pt-2">
+                    {error && (
+                      <div role="alert" className="mb-3 flex items-start gap-2.5 p-3.5 rounded-lg bg-[#2A1515] border border-[#6B2B2B] text-xs text-[#F0C2C2] font-sans leading-relaxed">
+                        <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                        <span>{error}</span>
+                      </div>
+                    )}
                     <button
                       type="submit"
-                      className="w-full inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] active:bg-[#B09054] text-[#080808] font-bold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-md group"
+                      disabled={sending}
+                      className="btn-sheen disabled:opacity-70 disabled:cursor-wait w-full inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] active:bg-[#B09054] text-[#080808] font-bold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-md group"
                     >
-                      <span>Transmit Inquiry to Engineering</span>
-                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                      <span>{sending ? 'Sending…' : 'Transmit Inquiry to Engineering'}</span>
+                      {sending ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                      )}
                     </button>
                     <p className="text-[11px] text-[#858B92] text-center mt-2.5 font-sans">
                       Protected under TLS 1.3 encryption &bull; Standard mutual NDA applies
@@ -416,7 +467,7 @@ export default function Contact() {
                 <div className="p-4 rounded-xl bg-[#141517] border border-[#252525] flex items-start gap-3 mt-4">
                   <ShieldCheck className="w-5 h-5 text-[#C6A66B] mt-0.5 flex-shrink-0" />
                   <p className="text-xs text-[#BFC4C8] leading-relaxed font-sans">
-                    All meetings can be scheduled both physically at our BKC Mumbai facility or remotely via encrypted video conference.
+                    All meetings can be scheduled both physically at our Indore office or remotely via encrypted video conference.
                   </p>
                 </div>
               </div>
@@ -439,10 +490,10 @@ export default function Contact() {
                   Connect directly with our engineering triage team via WhatsApp for emergency platform inquiries or rapid project estimation.
                 </p>
                 <a
-                  href="https://wa.me/912245897700"
+                  href={CONTACT.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] text-[#080808] font-bold text-xs uppercase tracking-wider transition-colors font-sans shadow-md"
+                  className="btn-sheen inline-flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] text-[#080808] font-bold text-xs uppercase tracking-wider transition-colors font-sans shadow-md"
                 >
                   <MessageSquare className="w-4 h-4" />
                   <span>Open WhatsApp Conversation</span>
@@ -480,7 +531,8 @@ export default function Contact() {
                     <button
                       type="button"
                       onClick={() => setActiveFaq(isOpen ? null : index)}
-                      className="w-full p-5 text-left flex items-center justify-between gap-4 focus:outline-none"
+                      aria-expanded={isOpen}
+                      className="w-full p-5 text-left flex items-center justify-between gap-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C6A66B] rounded-xl"
                     >
                       <span className="text-sm sm:text-base font-bold text-[#F5F1E8] font-sans">
                         {faq.q}
@@ -491,11 +543,21 @@ export default function Contact() {
                         }`}
                       />
                     </button>
-                    {isOpen && (
-                      <div className="px-5 pb-5 pt-1 text-sm text-[#BFC4C8] font-sans leading-relaxed border-t border-[#232326]">
-                        {faq.a}
-                      </div>
-                    )}
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.4, ease: EASE_OUT }}
+                          className="overflow-hidden"
+                        >
+                          <div className="px-5 pb-5 pt-1 text-sm text-[#BFC4C8] font-sans leading-relaxed border-t border-[#232326]">
+                            {faq.a}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 );
               })}

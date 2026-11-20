@@ -13,6 +13,7 @@ export const footerNavSections = [
     links: [
       { name: 'Ratnakhata', href: '/products/ratnakhata' },
       { name: 'BoundaryX', href: '/products/boundaryx' },
+      { name: 'BoundaryX App (Live)', href: 'https://boundaryx.yunetra.com/user/home', external: true },
     ],
   },
   {
