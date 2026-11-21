@@ -3,16 +3,18 @@ export const headerNavLinks = [
   { name: 'Ratnakhata', href: '/products/ratnakhata', isSubmenu: true },
   { name: 'BoundaryX', href: '/products/boundaryx', isSubmenu: true },
   { name: 'Services', href: '/services' },
+  { name: 'Pricing', href: '/pricing' },
   { name: 'About', href: '/about' },
   { name: 'Contact', href: '/contact' },
 ];
 
 export const footerNavSections = [
   {
-    title: 'Products',
+    title: 'Products & Pricing',
     links: [
       { name: 'Ratnakhata', href: '/products/ratnakhata' },
       { name: 'BoundaryX', href: '/products/boundaryx' },
+      { name: 'Pricing & Plans (INR)', href: '/pricing' },
       { name: 'BoundaryX App (Live)', href: 'https://boundaryx.yunetra.com/user/home', external: true },
     ],
   },

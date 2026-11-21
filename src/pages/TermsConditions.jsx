@@ -208,7 +208,7 @@ export default function TermsConditions() {
                 8. GOVERNING LAW &amp; JUDICIAL JURISDICTION
               </h2>
               <p>
-                These Terms of Service and any contractual disputes arising hereunder shall be governed by and construed in accordance with the laws of the Republic of India. The courts of Mumbai, Maharashtra shall have exclusive jurisdiction over all disputes arising out of or related to these agreements.
+                These Terms of Service and any contractual disputes arising hereunder shall be governed by and construed in accordance with the laws of the Republic of India. The courts of Guna, Madhya Pradesh shall have exclusive jurisdiction over all disputes arising out of or related to these agreements.
               </p>
             </section>
 
@@ -221,9 +221,9 @@ export default function TermsConditions() {
               </h2>
               <div className="p-6 rounded-xl bg-[#0A0A0C] border border-[#232326] space-y-1">
                 <div className="text-sm font-bold text-[#F5F1E8] font-sans">Yunetra Legal Affairs Division</div>
-                <div className="text-xs text-[#C6A66B] font-sans">Email: hritik45raghuwanshi@gmail.com &bull; Phone: 62600491554</div>
+                <div className="text-xs text-[#C6A66B] font-sans">Email: hritik45raghuwanshi@gmail.com &bull; Phone: +91 62604 91554</div>
                 <div className="text-xs text-[#858B92] font-sans mt-1">
-                  Registered Headquarters: Khatiwala Tank, Near Gurudwara, Indore
+                  Registered Headquarters: Salim Chacha Ki Badi, Kernal Ganj, Near Hanuman Mandir, Guna, Madhya Pradesh - 473001
                 </div>
               </div>
             </section>

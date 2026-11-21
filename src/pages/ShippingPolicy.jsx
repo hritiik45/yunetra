@@ -177,7 +177,7 @@ export default function ShippingPolicy() {
               <div className="mt-4 p-6 rounded-xl bg-[#141517] border border-[#2B2D31] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                   <div className="text-base font-bold text-[#F5F1E8]">Yunetra Logistics Operations &amp; Dispatch</div>
-                  <div className="text-xs text-[#C6A66B] mt-0.5">Email: hritik45raghuwanshi@gmail.com &bull; Phone: 62600491554</div>
+                  <div className="text-xs text-[#C6A66B] mt-0.5">Email: hritik45raghuwanshi@gmail.com &bull; Phone: +91 62604 91554</div>
                   <div className="text-xs text-[#858B92] mt-1">Please report transit discrepancies within 48 hours with packaging photos.</div>
                 </div>
                 <Link

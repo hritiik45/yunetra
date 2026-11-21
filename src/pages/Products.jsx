@@ -24,6 +24,7 @@ export default function Products() {
       slug: '/products/ratnakhata',
       image: '/images/hq/ratnakhata_mockup.webp',
       badge: 'Active Platform',
+      price: 'From ₹4,999 / month',
     },
     {
       id: 'boundaryx',
@@ -42,6 +43,7 @@ export default function Products() {
       liveUrl: 'https://boundaryx.yunetra.com/user/home',
       image: '/images/hq/boundaryx_mockup.webp',
       badge: 'Active System',
+      price: 'From ₹2,999 / tournament',
     },
   ];
 
@@ -127,6 +129,18 @@ export default function Products() {
                       {prod.tagline}
                     </p>
 
+                    {prod.price && (
+                      <div className="pt-1">
+                        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#141517] border border-[#C6A66B]/30 text-xs text-[#F5F1E8] font-sans">
+                          <span className="text-[#C6A66B] font-semibold">Pricing:</span>
+                          <span>{prod.price}</span>
+                          <Link to="/pricing" className="text-[#C6A66B] hover:text-white underline ml-1 transition-colors">
+                            View Plans &rarr;
+                          </Link>
+                        </span>
+                      </div>
+                    )}
+
                     <p className="text-sm sm:text-base text-[#BFC4C8] leading-relaxed font-sans">
                       {prod.description}
                     </p>
@@ -174,6 +188,13 @@ export default function Products() {
                         className="inline-flex items-center justify-center px-6 py-3.5 rounded-lg bg-[#141517] hover:bg-[#1A1C1F] border border-[#2B2D31] hover:border-[#C6A66B] text-[#F5F1E8] hover:text-[#C6A66B] text-xs uppercase font-semibold tracking-wider transition-all"
                       >
                         <span>Request Demonstration</span>
+                      </Link>
+                      <Link
+                        to="/pricing"
+                        className="inline-flex items-center justify-center gap-1.5 px-6 py-3.5 rounded-lg border border-[#C6A66B]/40 hover:border-[#C6A66B] bg-[#C6A66B]/10 hover:bg-[#C6A66B]/20 text-[#C6A66B] hover:text-[#F5F1E8] text-xs uppercase font-semibold tracking-wider transition-all"
+                      >
+                        <span>Pricing Plans</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
                       </Link>
                     </div>
 

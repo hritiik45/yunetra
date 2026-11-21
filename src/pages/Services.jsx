@@ -241,12 +241,19 @@ export default function Services() {
             <p className="text-sm text-[#BFC4C8] max-w-xl mx-auto font-sans leading-relaxed">
               We specialize in solving complex hardware-software boundary challenges, high-frequency valuation pipelines, and custom security protocols.
             </p>
-            <div className="pt-2">
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
               <Link
                 to="/contact"
                 className="btn-sheen inline-flex items-center gap-2.5 px-8 py-4 rounded-lg bg-[#C6A66B] hover:bg-[#D4B07B] text-[#080808] font-bold text-xs uppercase tracking-wider transition-all shadow-md"
               >
                 <span>Schedule Engineering Discovery Call</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                to="/pricing"
+                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-lg bg-[#141517] hover:bg-[#1A1C1F] border border-[#2B2D31] hover:border-[#C6A66B] text-[#F5F1E8] hover:text-[#C6A66B] text-xs uppercase font-semibold tracking-wider transition-all"
+              >
+                <span>Commercial Pricing &amp; Plans</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>

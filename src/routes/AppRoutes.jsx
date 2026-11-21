@@ -5,6 +5,7 @@ import MainLayout from '../components/layout/MainLayout';
 // Pages
 import Home from '../pages/Home';
 import Products from '../pages/Products';
+import Pricing from '../pages/Pricing';
 import Ratnakhata from '../pages/Ratnakhata';
 import BoundaryX from '../pages/BoundaryX';
 import Services from '../pages/Services';
@@ -73,6 +74,7 @@ export default function AppRoutes() {
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/pricing" element={<Pricing />} />
           <Route path="/products/ratnakhata" element={<Ratnakhata />} />
           <Route path="/products/boundaryx" element={<BoundaryX />} />
           <Route path="/services" element={<Services />} />

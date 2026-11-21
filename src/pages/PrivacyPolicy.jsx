@@ -146,9 +146,9 @@ export default function PrivacyPolicy() {
               </h2>
               <div className="p-6 rounded-xl bg-[#141517] border border-[#2B2D31]">
                 <div className="text-base font-bold text-[#F5F1E8]">Yunetra Data Protection Office</div>
-                <div className="text-xs text-[#C6A66B] mt-0.5">Email: hritik45raghuwanshi@gmail.com &bull; Phone: 62600491554</div>
+                <div className="text-xs text-[#C6A66B] mt-0.5">Email: hritik45raghuwanshi@gmail.com &bull; Phone: +91 62604 91554</div>
                 <div className="text-xs text-[#858B92] mt-1">
-                  Registered Address: Khatiwala Tank, Near Gurudwara, Indore
+                  Registered Address: Salim Chacha Ki Badi, Kernal Ganj, Near Hanuman Mandir, Guna, Madhya Pradesh - 473001
                 </div>
               </div>
             </section>

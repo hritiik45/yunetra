@@ -467,7 +467,7 @@ export default function Contact() {
                 <div className="p-4 rounded-xl bg-[#141517] border border-[#252525] flex items-start gap-3 mt-4">
                   <ShieldCheck className="w-5 h-5 text-[#C6A66B] mt-0.5 flex-shrink-0" />
                   <p className="text-xs text-[#BFC4C8] leading-relaxed font-sans">
-                    All meetings can be scheduled both physically at our Indore office or remotely via encrypted video conference.
+                    All meetings can be scheduled both physically at our Guna office or remotely via encrypted video conference.
                   </p>
                 </div>
               </div>
